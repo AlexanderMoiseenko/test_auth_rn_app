@@ -1,0 +1,25 @@
+export const theme = {
+  spacing: {
+    xxs: 4,
+    xs: 10,
+    s: 15,
+    m: 20,
+    l: 40,
+    xl: 50,
+  },
+  fontSize: {
+    s: 16,
+    m: 20,
+    l: 24,
+  },
+  borderRadius: {
+    s: 10,
+    m: 25,
+  },
+  borderWidth: {
+    s: 1,
+  },
+  iconSize: {
+    s: 24,
+  },
+};
