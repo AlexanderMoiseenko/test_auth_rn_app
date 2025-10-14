@@ -5,8 +5,7 @@ import { getUserProfile } from '@/api/auth';
 import { useAuth } from '@/context/AuthContext';
 import Button, { BUTTON_VARIATIONS } from '@/components/Button';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { colors } from '@/constants/colors';
-import { theme } from '@/constants/theme';
+import { colors, theme } from '@/constants';
 
 const ProfileScreen = () => {
   const { logout } = useAuth();

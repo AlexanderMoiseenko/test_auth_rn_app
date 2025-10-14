@@ -2,14 +2,13 @@ import React, { useCallback, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '@/components/Button';
-import { colors } from '@/constants/colors';
-import { theme } from '@/constants/theme';
+import { colors, theme, ScreenNames } from '@/constants';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
 
   const handleGoToLogin = useCallback(() => {
-    navigation.navigate('Login');
+    navigation.navigate(ScreenNames.Login);
   }, []);
 
   return (

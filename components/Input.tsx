@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { colors } from '@/constants/colors';
-import { theme } from '@/constants/theme';
+import { colors, theme } from '@/constants';
 
 interface InputProps {
   placeholder: string;

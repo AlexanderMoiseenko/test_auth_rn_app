@@ -1,3 +1,5 @@
+import { ScreenNames } from '@/constants';
+
 export interface User {
   id: number;
   username: string;
@@ -22,12 +24,12 @@ export interface AuthContextType {
 }
 
 export type AuthStackParamList = {
-  Home: undefined;
-  Login: undefined;
+  [ScreenNames.Home]: undefined;
+  [ScreenNames.Login]: undefined;
 };
 
 export type AppStackParamList = {
-  Profile: undefined;
+  [ScreenNames.Profile]: undefined;
 };
 
 declare global {

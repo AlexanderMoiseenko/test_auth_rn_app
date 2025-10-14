@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { AuthContextType } from '@/types';
-import apiClient from '@/api/client';
+import authService from '@/services/authService';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -17,6 +17,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const logout = useCallback(async () => {
+    setToken(null);
+    await SecureStore.deleteItemAsync('userToken');
+  }, []);
 
   useEffect(() => {
     const loadToken = async () => {
@@ -27,27 +32,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsLoading(false);
     };
     loadToken();
-  }, []);
+    authService.register(logout);
+  }, [logout]);
 
   const login = useCallback(async (newToken: string) => {
     setToken(newToken);
     await SecureStore.setItemAsync('userToken', newToken);
   }, []);
-
-  const logout = useCallback(async () => {
-    setToken(null);
-    await SecureStore.deleteItemAsync('userToken');
-  }, []);
-
-  apiClient.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error.response?.status === 401) {
-        logout();
-      }
-      return Promise.reject(error);
-    }
-  );
 
   const contextValue = useMemo(
     () => ({

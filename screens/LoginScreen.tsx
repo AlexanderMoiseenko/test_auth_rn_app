@@ -3,8 +3,7 @@ import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import ErrorMessage from '@/components/ErrorMessage';
-import { colors } from '@/constants/colors';
-import { theme } from '@/constants/theme';
+import { colors, theme } from '@/constants';
 import { useLoginForm } from '@/hooks/useLoginForm';
 
 const LoginScreen = () => {

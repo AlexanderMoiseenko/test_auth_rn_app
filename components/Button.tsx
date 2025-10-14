@@ -10,8 +10,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import { colors } from '@/constants/colors';
-import { theme } from '@/constants/theme';
+import { colors, theme } from '@/constants';
 
 interface ButtonProps {
   title: string;

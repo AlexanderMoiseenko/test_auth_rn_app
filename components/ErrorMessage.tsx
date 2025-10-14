@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors } from '@/constants/colors';
-import { theme } from '@/constants/theme';
+import { colors, theme } from '@/constants';
 
 interface ErrorMessageProps {
   message: string;
