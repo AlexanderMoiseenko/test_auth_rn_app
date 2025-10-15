@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsLoading(false);
     };
     loadToken();
-    authService.register(logout);
+    authService.registerLogout(logout);
   }, [logout]);
 
   const login = useCallback(async (newToken: string) => {

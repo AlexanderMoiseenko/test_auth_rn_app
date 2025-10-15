@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
@@ -9,14 +9,19 @@ import { useLoginForm } from '@/hooks/useLoginForm';
 const LoginScreen = () => {
   const {
     username,
-    setUsername,
+    handleUsernameChange,
     password,
-    setPassword,
+    handlePasswordChange,
     usernameError,
     passwordError,
     handleLogin,
     mutation,
   } = useLoginForm();
+
+  const disabledButtonState = useMemo(
+    () => !username && !password,
+    [username, password]
+  );
 
   return (
     <KeyboardAvoidingView
@@ -26,24 +31,26 @@ const LoginScreen = () => {
       <Input
         placeholder='Username'
         value={username}
-        onChangeText={setUsername}
+        onChangeText={handleUsernameChange}
         error={usernameError}
       />
       <Input
         placeholder='Password'
         value={password}
-        onChangeText={setPassword}
+        onChangeText={handlePasswordChange}
         secureTextEntry
-        toggleSecureEntry
         error={passwordError}
       />
 
-      {mutation.isError && <ErrorMessage message={"User emil doesn't exist"} />}
+      {mutation.isError && mutation.error?.message && (
+        <ErrorMessage message={mutation.error?.message} />
+      )}
 
       <Button
         title='Login'
         onPress={handleLogin}
         loading={mutation.isPending}
+        disabled={disabledButtonState}
       />
     </KeyboardAvoidingView>
   );

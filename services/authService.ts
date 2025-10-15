@@ -1,10 +1,16 @@
+import { loginUser } from '@/api/auth';
+
 type LogoutFunction = () => Promise<void> | void;
 
 class AuthService {
   private logoutCallback: LogoutFunction | null = null;
 
-  register(logoutCallback: LogoutFunction): void {
+  registerLogout(logoutCallback: LogoutFunction): void {
     this.logoutCallback = logoutCallback;
+  }
+
+  async login(credentials: { username: string; password: string }) {
+    return loginUser(credentials);
   }
 
   logout(): void {

@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { loginUser } from '@/api/auth';
+import authService from '@/services/authService';
 import { useAuth } from '@/context/AuthContext';
+import { AuthResponse } from '@/types';
 
 export const useLoginForm = () => {
   const [username, setUsername] = useState('');
@@ -10,12 +11,26 @@ export const useLoginForm = () => {
   const [passwordError, setPasswordError] = useState('');
   const { login } = useAuth();
 
-  const mutation = useMutation({
-    mutationFn: loginUser,
+  const mutation = useMutation<
+    AuthResponse,
+    Error,
+    { username: string; password: string }
+  >({
+    mutationFn: authService.login,
     onSuccess: (data) => {
       login(data.accessToken);
     },
   });
+
+  const handleUsernameChange = useCallback((text: string) => {
+    setUsername(text);
+    setUsernameError('');
+  }, []);
+
+  const handlePasswordChange = useCallback((text: string) => {
+    setPassword(text);
+    setPasswordError('');
+  }, []);
 
   const handleLogin = useCallback(() => {
     let valid = true;
@@ -39,9 +54,9 @@ export const useLoginForm = () => {
 
   return {
     username,
-    setUsername,
+    handleUsernameChange,
     password,
-    setPassword,
+    handlePasswordChange,
     usernameError,
     passwordError,
     handleLogin,

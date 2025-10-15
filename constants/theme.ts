@@ -21,5 +21,7 @@ export const theme = {
   },
   iconSize: {
     s: 24,
+    xs: 16,
+    xxs: 12,
   },
 };
