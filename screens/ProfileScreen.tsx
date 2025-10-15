@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingTop: theme.spacing.xl,
     paddingHorizontal: theme.spacing.m,
   },
   welcomeText: {
     fontSize: theme.fontSize.l,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamily.semiBold,
     marginBottom: theme.spacing.xl,
   },
 });

@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: theme.fontSize.s,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamily.semiBold,
   },
   primaryButtonText: {
     color: colors.white,

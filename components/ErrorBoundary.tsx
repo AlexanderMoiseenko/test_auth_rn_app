@@ -1,6 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors } from '@/constants';
+import { colors, theme } from '@/constants';
 
 interface Props {
   children: ReactNode;
@@ -45,13 +45,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontSize: theme.fontSize.m,
+    fontFamily: theme.fontFamily.semiBold,
+    marginBottom: theme.spacing.xs,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: theme.fontSize.s,
     color: colors.gray,
+    fontFamily: theme.fontFamily.regular,
   },
 });
 

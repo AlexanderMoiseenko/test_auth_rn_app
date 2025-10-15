@@ -24,4 +24,9 @@ export const theme = {
     xs: 16,
     xxs: 12,
   },
+  fontFamily: {
+    regular: 'NotoSans_400Regular',
+    medium: 'NotoSans_500Medium',
+    semiBold: 'NotoSans_600SemiBold',
+  },
 };
