@@ -24,13 +24,17 @@ export const useLoginForm = () => {
 
   const handleUsernameChange = useCallback((text: string) => {
     setUsername(text);
-    setUsernameError('');
-  }, []);
+    if (usernameError) {
+      setUsernameError('');
+    }
+  }, [usernameError, setUsername, setUsernameError]);
 
   const handlePasswordChange = useCallback((text: string) => {
     setPassword(text);
-    setPasswordError('');
-  }, []);
+    if (passwordError) {
+      setPasswordError('');
+    }
+  }, [passwordError, setPassword, setPasswordError]);
 
   const handleLogin = useCallback(() => {
     let valid = true;

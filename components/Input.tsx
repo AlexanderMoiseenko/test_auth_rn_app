@@ -36,14 +36,15 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const animatedValue = useRef(new Animated.Value(value ? 1 : 0)).current;
+  const hasValue = value !== '';
 
   useEffect(() => {
     Animated.timing(animatedValue, {
-      toValue: isFocused || value ? 1 : 0,
-      duration: 200,
+      toValue: isFocused || hasValue ? 1 : 0,
+      duration: 150,
       useNativeDriver: false,
     }).start();
-  }, [isFocused, value, animatedValue]);
+  }, [isFocused, hasValue, animatedValue]);
 
   const handleFocus = useCallback(() => setIsFocused(true), []);
   const handleBlur = useCallback(() => setIsFocused(false), []);
@@ -80,6 +81,7 @@ const Input: React.FC<InputProps> = ({
           styles.inputContainer,
           isFocused && styles.inputFocused,
           !!error && styles.inputError,
+          hasValue && !error && styles.inputSuccess,
         ]}
       >
         <Animated.Text style={labelStyle}>{placeholder}</Animated.Text>
@@ -103,7 +105,7 @@ const Input: React.FC<InputProps> = ({
           </TouchableOpacity>
         )}
       </View>
-      {!!error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {!!error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
@@ -144,13 +146,13 @@ const styles = StyleSheet.create({
   inputError: {
     borderColor: colors.error,
   },
+  inputSuccess: {
+    borderColor: colors.blue,
+  },
   errorText: {
     color: colors.error,
     alignSelf: 'flex-start',
     marginTop: theme.spacing.xxs,
-  },
-  noErrorContainer: {
-    height: theme.spacing.s,
   },
 });
 

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingTop: theme.spacing.xl,
     paddingHorizontal: theme.spacing.m,
   },

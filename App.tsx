@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/context/AuthContext';
@@ -14,18 +14,19 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { View } from 'react-native';
 
-setupInterceptors();
-
-const queryClient = new QueryClient();
-
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [queryClient] = useState(() => new QueryClient());
   const [fontsLoaded, fontError] = useFonts({
     NotoSans_400Regular,
     NotoSans_500Medium,
     NotoSans_600SemiBold,
   });
+
+  useEffect(() => {
+    setupInterceptors();
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {

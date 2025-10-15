@@ -33,6 +33,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     };
     loadToken();
     authService.registerLogout(logout);
+
+    return () => {
+      authService.unregisterLogout();
+    };
   }, [logout]);
 
   const login = useCallback(async (newToken: string) => {

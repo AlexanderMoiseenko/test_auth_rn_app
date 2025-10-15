@@ -9,6 +9,10 @@ class AuthService {
     this.logoutCallback = logoutCallback;
   }
 
+  unregisterLogout(): void {
+    this.logoutCallback = null;
+  }
+
   async login(credentials: { username: string; password: string }) {
     return loginUser(credentials);
   }
