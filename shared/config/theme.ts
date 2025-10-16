@@ -8,6 +8,7 @@ export const theme = {
     xl: 50,
   },
   fontSize: {
+    xs: 12,
     s: 16,
     m: 20,
     l: 24,
@@ -20,6 +21,8 @@ export const theme = {
     s: 1,
   },
   iconSize: {
+    l: 32,
+    m: 28,
     s: 24,
     xs: 16,
     xxs: 12,

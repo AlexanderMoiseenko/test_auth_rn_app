@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   loading,
   variant = BUTTON_VARIATIONS.primary,
-  ...props
+  buttonStyle,
 }) => {
   const buttonContent = useMemo(
     () => (
@@ -72,7 +72,7 @@ const Button: React.FC<ButtonProps> = ({
       style={[
         styles.button,
         disabled || loading ? styles.disabled : {},
-        props?.buttonStyle || {},
+        buttonStyle || {},
       ]}
       onPress={onPress}
     >
@@ -94,12 +94,13 @@ const Button: React.FC<ButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     borderRadius: theme.borderRadius.m,
+
     marginTop: theme.spacing.xs,
     overflow: 'hidden',
     width: '100%',
   },
   buttonText: {
-    fontFamily: theme.fontFamily.semiBold,
+    fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.s,
   },
   disabled: {
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.l,
-    paddingVertical: theme.spacing.s,
+    paddingVertical: theme.spacing.xs,
   },
   primaryButtonText: {
     color: colors.white,
@@ -117,15 +118,15 @@ const styles = StyleSheet.create({
   secondaryButton: {
     alignItems: 'center',
     backgroundColor: colors.white,
-    borderColor: colors.grayLight,
+    borderColor: colors.white,
     borderRadius: theme.borderRadius.m,
     borderWidth: theme.borderWidth.s,
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.l,
-    paddingVertical: theme.spacing.s,
+    paddingVertical: theme.spacing.xs,
   },
   secondaryButtonText: {
-    color: colors.primary,
+    color: colors.black,
   },
 });
 
