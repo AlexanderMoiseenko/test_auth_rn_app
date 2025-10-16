@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/context/AuthContext';
 import { RootNavigator } from '@/navigation/RootNavigator';
-import ErrorBoundary from '@/components/ErrorBoundary';
-import { setupInterceptors } from '@/api/axiosSetup';
+import ErrorBoundary from '@/shared/ui/ErrorBoundary';
+import { setupInterceptors } from '@/shared/api/axiosSetup';
 import {
   useFonts,
   NotoSans_400Regular,
@@ -14,7 +14,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { View } from 'react-native';
 
-import './i18n'; // Initialize i18n
+import '@/shared/config/i18n'; // Initialize i18n
 
 SplashScreen.preventAutoHideAsync();
 

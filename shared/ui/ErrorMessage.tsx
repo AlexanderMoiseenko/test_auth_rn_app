@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, theme } from '@/constants';
+import { colors, theme } from '@/shared/config';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface ErrorMessageProps {

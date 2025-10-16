@@ -1,4 +1,4 @@
-import { loginUser } from '@/api/auth';
+import { loginUser } from '@/entities/user/model/api';
 
 type LogoutFunction = () => Promise<void> | void;
 

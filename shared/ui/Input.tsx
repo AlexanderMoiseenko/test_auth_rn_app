@@ -15,7 +15,7 @@ import {
   Animated,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { colors, theme } from '@/constants';
+import { colors, theme } from '@/shared/config';
 
 interface InputProps {
   placeholder: string;

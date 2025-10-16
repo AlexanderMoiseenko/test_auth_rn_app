@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import authService from '@/services/authService';
 import { useAuth } from '@/context/AuthContext';
-import { AuthResponse } from '@/types';
+import { AuthResponse } from '@/entities/user/model/types';
 
 export const useLoginForm = () => {
   const { t } = useTranslation();

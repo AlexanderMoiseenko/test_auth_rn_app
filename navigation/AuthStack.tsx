@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '@/screens/HomeScreen';
-import LoginScreen from '@/screens/LoginScreen';
+import HomeScreen from '@/pages/HomeScreen';
+import LoginScreen from '@/pages/LoginScreen';
 import { AuthStackParamList } from '@/types';
-import { ScreenNames } from '@/constants';
+import { ScreenNames } from '@/shared/config';
 
 const Stack = createStackNavigator<AuthStackParamList>();
 

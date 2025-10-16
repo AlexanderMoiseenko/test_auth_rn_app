@@ -2,8 +2,8 @@ import React, { useCallback, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import Button from '@/components/Button';
-import { colors, theme, ScreenNames } from '@/constants';
+import Button from '@/shared/ui/Button';
+import { colors, theme, ScreenNames } from '@/shared/config';
 
 const HomeScreen = () => {
   const navigation = useNavigation();

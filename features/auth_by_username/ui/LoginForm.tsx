@@ -1,13 +1,12 @@
 import React, { memo, useMemo } from 'react';
-import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import Input from '@/components/Input';
-import Button from '@/components/Button';
-import ErrorMessage from '@/components/ErrorMessage';
-import { colors, theme } from '@/constants';
-import { useLoginForm } from '@/hooks/useLoginForm';
+import Input from '@/shared/ui/Input';
+import Button from '@/shared/ui/Button';
+import ErrorMessage from '@/shared/ui/ErrorMessage';
+import { useLoginForm } from '../model/useLoginForm';
 
-const LoginScreen = () => {
+const LoginForm = () => {
   const { t } = useTranslation();
   const {
     username,
@@ -27,8 +26,8 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <Input
         placeholder={t('common.username')}
@@ -60,15 +59,8 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.background,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: theme.spacing.m,
-  },
-  button: {
-    marginTop: theme.spacing.m,
+    width: '100%',
   },
 });
 
-export default memo(LoginScreen);
+export default memo(LoginForm);

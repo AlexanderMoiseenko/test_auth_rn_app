@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors, theme } from '@/constants';
+import { colors, theme } from '@/shared/config';
 
 export const BUTTON_VARIATIONS = {
   primary: 'primary',

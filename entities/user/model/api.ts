@@ -1,5 +1,5 @@
-import apiClient from '@/api/client';
-import { AuthResponse, User } from '@/types';
+import apiClient from '@/shared/api/client';
+import { AuthResponse, User } from './types';
 
 export const loginUser = async (credentials: {
   username: string;
