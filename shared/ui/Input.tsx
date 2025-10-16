@@ -52,7 +52,7 @@ const Input: React.FC<InputProps> = ({
 
   const labelStyle = useMemo(() => {
     return {
-      position: 'absolute',
+      position: 'absolute' as const,
       left: theme.spacing.s,
       top: animatedValue.interpolate({
         inputRange: [0, 1],

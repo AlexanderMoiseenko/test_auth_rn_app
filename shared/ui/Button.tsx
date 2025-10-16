@@ -16,6 +16,8 @@ export const BUTTON_VARIATIONS = {
   secondary: 'secondary',
 } as const;
 
+const LINEAR_GRADIENT_COLORS = ['#51c7fe', '#338bff'] as const;
+
 interface ButtonProps {
   title: string;
   onPress: () => void;
@@ -68,7 +70,7 @@ const Button: React.FC<ButtonProps> = ({
       {variant === BUTTON_VARIATIONS.primary ? (
         <LinearGradient
           start={gradientStart}
-          colors={['#51c7fe', '#338bff']}
+          colors={LINEAR_GRADIENT_COLORS}
           style={styles.gradient}
         >
           {buttonContent}
