@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   View,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, theme } from '@/constants';
@@ -19,6 +21,7 @@ interface ButtonProps {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
+  buttonStyle?: StyleProp<ViewStyle>;
   variant?: (typeof BUTTON_VARIATIONS)[keyof typeof BUTTON_VARIATIONS];
 }
 
@@ -28,6 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   loading,
   variant = BUTTON_VARIATIONS.primary,
+  ...props
 }) => {
   const buttonContent = useMemo(
     () => (
@@ -53,7 +57,11 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity
-      style={[styles.button, disabled || loading ? styles.disabled : {}]}
+      style={[
+        styles.button,
+        disabled || loading ? styles.disabled : {},
+        props?.buttonStyle || {},
+      ]}
       onPress={onPress}
       disabled={disabled || loading}
     >

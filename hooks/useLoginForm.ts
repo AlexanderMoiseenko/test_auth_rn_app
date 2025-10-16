@@ -1,10 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import authService from '@/services/authService';
 import { useAuth } from '@/context/AuthContext';
 import { AuthResponse } from '@/types';
 
 export const useLoginForm = () => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
@@ -39,13 +41,13 @@ export const useLoginForm = () => {
   const handleLogin = useCallback(() => {
     let valid = true;
     if (!username) {
-      setUsernameError('Username is required');
+      setUsernameError(t('loginScreen.validation.usernameRequired'));
       valid = false;
     } else {
       setUsernameError('');
     }
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError(t('loginScreen.validation.passwordRequired'));
       valid = false;
     } else {
       setPasswordError('');
@@ -54,7 +56,7 @@ export const useLoginForm = () => {
     if (valid) {
       mutation.mutate({ username, password });
     }
-  }, [username, password, mutation]);
+  }, [username, password, mutation, t]);
 
   return {
     username,

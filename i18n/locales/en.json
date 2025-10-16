@@ -1,0 +1,25 @@
+{
+  "common": {
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "homeScreen": {
+    "goToLogin": "Go to Login"
+  },
+  "loginScreen": {
+    "userNotFound": "User with this username doesn't exist",
+    "validation": {
+      "usernameRequired": "Username is required",
+      "passwordRequired": "Password is required"
+    }
+  },
+  "profileScreen": {
+    "welcome": "Hi, {{firstName}} {{lastName}}!"
+  },
+  "errorBoundary": {
+    "title": "Something went wrong.",
+    "subtitle": "Please restart the application."
+  }
+}

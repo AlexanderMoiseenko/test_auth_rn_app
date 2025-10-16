@@ -14,6 +14,8 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { View } from 'react-native';
 
+import './i18n'; // Initialize i18n
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {

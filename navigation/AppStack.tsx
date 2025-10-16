@@ -6,7 +6,7 @@ import { ScreenNames } from '@/constants';
 const Stack = createStackNavigator<AppStackParamList>();
 
 export const AppStack = () => (
-    <Stack.Navigator>
-        <Stack.Screen name={ScreenNames.Profile} component={ProfileScreen} />
-    </Stack.Navigator>
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name={ScreenNames.Profile} component={ProfileScreen} />
+  </Stack.Navigator>
 );

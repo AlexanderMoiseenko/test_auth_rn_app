@@ -7,7 +7,7 @@ import { ScreenNames } from '@/constants';
 const Stack = createStackNavigator<AuthStackParamList>();
 
 export const AuthStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name={ScreenNames.Home} component={HomeScreen} />
     <Stack.Screen name={ScreenNames.Login} component={LoginScreen} />
   </Stack.Navigator>

@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '@/api/auth';
 import { useAuth } from '@/context/AuthContext';
 import Button, { BUTTON_VARIATIONS } from '@/components/Button';
@@ -9,6 +10,7 @@ import { colors, theme } from '@/constants';
 
 const ProfileScreen = () => {
   const { logout } = useAuth();
+  const { t } = useTranslation();
   const {
     data: profile,
     isLoading,
@@ -25,10 +27,13 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
-        Hi, {profile?.firstName} {profile?.lastName}!
+        {t('profileScreen.welcome', { 
+          firstName: profile?.firstName, 
+          lastName: profile?.lastName 
+        })}
       </Text>
       <Button
-        title='Logout'
+        title={t('common.logout')}
         onPress={logout}
         variant={BUTTON_VARIATIONS.secondary}
       />

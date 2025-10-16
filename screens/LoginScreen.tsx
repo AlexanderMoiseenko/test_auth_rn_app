@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -7,6 +8,7 @@ import { colors, theme } from '@/constants';
 import { useLoginForm } from '@/hooks/useLoginForm';
 
 const LoginScreen = () => {
+  const { t } = useTranslation();
   const {
     username,
     handleUsernameChange,
@@ -29,25 +31,25 @@ const LoginScreen = () => {
       style={styles.container}
     >
       <Input
-        placeholder='Username'
+        placeholder={t('common.username')}
         value={username}
         onChangeText={handleUsernameChange}
         error={usernameError}
       />
       <Input
-        placeholder='Password'
+        placeholder={t('common.password')}
         value={password}
         onChangeText={handlePasswordChange}
         secureTextEntry
         error={passwordError}
       />
 
-      {mutation.isError && mutation.error?.message && (
-        <ErrorMessage message={mutation.error?.message} />
+      {mutation.isError && (
+        <ErrorMessage message={t('loginScreen.userNotFound')} />
       )}
 
       <Button
-        title='Login'
+        title={t('common.login')}
         onPress={handleLogin}
         loading={mutation.isPending}
         disabled={disabledButtonState}
@@ -63,6 +65,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.m,
+  },
+  button: {
+    marginTop: theme.spacing.m,
   },
 });
 
