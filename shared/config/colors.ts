@@ -1,12 +1,10 @@
 export const colors = {
   primary: '#4A90E2',
-  background: '#F2F2F7',
+  background: '#F5F8FA',
   white: '#fff',
   error: '#FF3336',
-  blue: '#338BFF',
-  errorBackground: '#ff0000',
-  border: '#D8E2E6',
-  text: '#000',
+  red: '#FF3336',
+  redDark: '#FF3336',
   gray: '#879399',
   grayLight: '#D8E2E6',
 };

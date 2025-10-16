@@ -28,7 +28,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
 const styles = StyleSheet.create({
   errorContainer: {
     alignItems: 'center',
-    backgroundColor: colors.errorBackground,
+    backgroundColor: colors.red,
     borderRadius: theme.borderRadius.s,
     flexDirection: 'row',
     marginVertical: theme.spacing.xs,

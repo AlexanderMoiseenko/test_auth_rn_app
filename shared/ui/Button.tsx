@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   secondaryButton: {
     alignItems: 'center',
     backgroundColor: colors.white,
-    borderColor: colors.border,
+    borderColor: colors.grayLight,
     borderRadius: theme.borderRadius.m,
     borderWidth: theme.borderWidth.s,
     justifyContent: 'center',

@@ -60,8 +60,8 @@ const Input: React.FC<InputProps> = ({
       color: animatedValue.interpolate({
         inputRange: [0, 1],
         outputRange: [
-          error ? colors.error : colors.gray,
-          error ? colors.error : colors.primary,
+          error ? colors.redDark : colors.gray,
+          error ? colors.redDark : colors.primary,
         ],
       }),
       backgroundColor: 'transparent',
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     alignItems: 'center',
     backgroundColor: colors.white,
-    borderColor: colors.border,
+    borderColor: colors.grayLight,
     borderRadius: theme.borderRadius.s,
     borderWidth: theme.borderWidth.s,
     flexDirection: 'row',
@@ -141,13 +141,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   inputError: {
-    borderColor: colors.error,
+    borderColor: colors.redDark,
   },
   inputFocused: {
     borderColor: colors.primary,
   },
   inputSuccess: {
-    borderColor: colors.blue,
+    borderColor: colors.primary,
   },
 });
 
