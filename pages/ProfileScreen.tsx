@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '@/entities/user/model/api';
@@ -20,10 +21,15 @@ const ProfileScreen = () => {
   });
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <Text>{t('common.error')}: {error.message}</Text>;
+  if (isError)
+    return (
+      <Text>
+        {t('common.error')}: {error.message}
+      </Text>
+    );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.welcomeText}>
         {t('profileScreen.welcome', {
           firstName: profile?.firstName,
@@ -31,7 +37,7 @@ const ProfileScreen = () => {
         })}
       </Text>
       <LogoutButton />
-    </View>
+    </SafeAreaView>
   );
 };
 

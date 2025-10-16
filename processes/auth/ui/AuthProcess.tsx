@@ -2,7 +2,7 @@ import React, { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/context/AuthContext';
-import { loginUser, LoginCredentials } from '@/entities/user/model/api';
+import { loginUser } from '@/entities/user/model/api';
 import LoginForm from '@/features/auth_by_username/ui/LoginForm';
 
 const AuthProcess = () => {

@@ -5,6 +5,7 @@ import { AuthProvider } from '@/context/AuthContext';
 import { RootNavigator } from '../navigation/RootNavigator';
 import ErrorBoundary from '@/shared/ui/ErrorBoundary';
 import { setupInterceptors } from '@/shared/api/axiosSetup';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
   NotoSans_400Regular,
@@ -41,17 +42,19 @@ const AppProviders = () => {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <NavigationContainer>
-              <RootNavigator />
-            </NavigationContainer>
-          </AuthProvider>
-        </QueryClientProvider>
-      </ErrorBoundary>
-    </View>
+    <SafeAreaProvider>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <ErrorBoundary>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <NavigationContainer>
+                <RootNavigator />
+              </NavigationContainer>
+            </AuthProvider>
+          </QueryClientProvider>
+        </ErrorBoundary>
+      </View>
+    </SafeAreaProvider>
   );
 };
 
