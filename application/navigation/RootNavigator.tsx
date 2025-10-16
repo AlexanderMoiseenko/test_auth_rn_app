@@ -1,6 +1,6 @@
 import { useAuth } from '@/context/AuthContext';
-import { AppStack } from '@/navigation/AppStack';
-import { AuthStack } from '@/navigation/AuthStack';
+import { AppStack } from './AppStack';
+import { AuthStack } from './AuthStack';
 import LoadingSpinner from '@/shared/ui/LoadingSpinner';
 
 export const RootNavigator = () => {

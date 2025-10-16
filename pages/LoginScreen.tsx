@@ -1,13 +1,17 @@
 import React, { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { colors, theme } from '@/shared/config';
-import { LoginForm } from '@/features/auth_by_username';
+import AuthProcess from '@/processes/auth/ui/AuthProcess';
 
 const LoginScreen = () => {
   return (
-    <View style={styles.container}>
-      <LoginForm />
-    </View>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={-100} // for iOS keyboard to decrease the distance between the keyboard and the input fields
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <AuthProcess />
+    </KeyboardAvoidingView>
   );
 };
 

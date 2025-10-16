@@ -11,3 +11,8 @@ export interface User {
 export interface AuthResponse extends User {
   accessToken: string;
 }
+
+export interface LoginCredentials {
+  username: string;
+  password: string;
+}

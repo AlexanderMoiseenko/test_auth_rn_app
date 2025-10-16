@@ -1,8 +1,9 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import { colors, theme } from '@/shared/config';
 
-interface Props {
+interface Props extends WithTranslation {
   children: ReactNode;
 }
 
@@ -24,11 +25,12 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
+    const { t } = this.props;
     if (this.state.hasError) {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>Something went wrong.</Text>
-          <Text style={styles.subtitle}>Please restart the application.</Text>
+          <Text style={styles.title}>{t('errorBoundary.title')}</Text>
+          <Text style={styles.subtitle}>{t('errorBoundary.subtitle')}</Text>
         </View>
       );
     }
@@ -56,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ErrorBoundary;
+export default withTranslation()(ErrorBoundary);

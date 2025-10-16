@@ -1,66 +1,64 @@
-import React, { memo, useMemo } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import Input from '@/shared/ui/Input';
 import Button from '@/shared/ui/Button';
 import ErrorMessage from '@/shared/ui/ErrorMessage';
-import { useLoginForm } from '../model/useLoginForm';
 
-const LoginForm = () => {
-  const { t } = useTranslation();
-  const {
+interface LoginFormProps {
+  username: string;
+  password: string;
+  usernameError?: string;
+  passwordError?: string;
+  loginError?: string;
+  isLoggingIn: boolean;
+  disabled: boolean;
+  handleUsernameChange: (text: string) => void;
+  handlePasswordChange: (text: string) => void;
+  handleLogin: () => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = memo(
+  ({
     username,
-    handleUsernameChange,
     password,
-    handlePasswordChange,
     usernameError,
     passwordError,
+    loginError,
+    isLoggingIn,
+    disabled,
+    handleUsernameChange,
+    handlePasswordChange,
     handleLogin,
-    mutation,
-  } = useLoginForm();
+  }) => {
+    const { t } = useTranslation();
 
-  const disabledButtonState = useMemo(
-    () => !username && !password,
-    [username, password]
-  );
+    return (
+      <>
+        <Input
+          placeholder={t('common.username')}
+          value={username}
+          onChangeText={handleUsernameChange}
+          error={usernameError}
+        />
+        <Input
+          placeholder={t('common.password')}
+          value={password}
+          onChangeText={handlePasswordChange}
+          secureTextEntry
+          error={passwordError}
+        />
 
-  return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <Input
-        placeholder={t('common.username')}
-        value={username}
-        onChangeText={handleUsernameChange}
-        error={usernameError}
-      />
-      <Input
-        placeholder={t('common.password')}
-        value={password}
-        onChangeText={handlePasswordChange}
-        secureTextEntry
-        error={passwordError}
-      />
+        {loginError && <ErrorMessage message={t('loginScreen.userNotFound')} />}
 
-      {mutation.isError && (
-        <ErrorMessage message={t('loginScreen.userNotFound')} />
-      )}
+        <Button
+          title={t('common.login')}
+          onPress={handleLogin}
+          loading={isLoggingIn}
+          disabled={disabled}
+        />
+      </>
+    );
+  }
+);
 
-      <Button
-        title={t('common.login')}
-        onPress={handleLogin}
-        loading={mutation.isPending}
-        disabled={disabledButtonState}
-      />
-    </KeyboardAvoidingView>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-});
-
-export default memo(LoginForm);
+export default LoginForm;

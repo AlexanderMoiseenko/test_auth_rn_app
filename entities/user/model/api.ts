@@ -1,10 +1,9 @@
 import apiClient from '@/shared/api/client';
-import { AuthResponse, User } from './types';
+import { AuthResponse, User, LoginCredentials } from './types';
 
-export const loginUser = async (credentials: {
-  username: string;
-  password: string;
-}): Promise<AuthResponse> => {
+export const loginUser = async (
+  credentials: LoginCredentials
+): Promise<AuthResponse> => {
   const response = await apiClient.post('/auth/login', credentials);
   return response.data;
 };

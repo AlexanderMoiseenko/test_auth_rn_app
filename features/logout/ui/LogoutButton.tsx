@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/context/AuthContext';
 import Button, { BUTTON_VARIATIONS } from '@/shared/ui/Button';
 
-const LogoutButton = () => {
+const LogoutButton = memo(() => {
   const { logout } = useAuth();
   const { t } = useTranslation();
 
@@ -14,6 +14,6 @@ const LogoutButton = () => {
       variant={BUTTON_VARIATIONS.secondary}
     />
   );
-};
+});
 
-export default memo(LogoutButton);
+export default LogoutButton;

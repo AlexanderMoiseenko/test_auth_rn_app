@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '@/entities/user/model/api';
-import { LogoutButton } from '@/features/logout';
+import LogoutButton from '@/features/logout/ui/LogoutButton';
 import LoadingSpinner from '@/shared/ui/LoadingSpinner';
 import { colors, theme } from '@/shared/config';
 
@@ -20,7 +20,7 @@ const ProfileScreen = () => {
   });
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <Text>Error: {error.message}</Text>;
+  if (isError) return <Text>{t('common.error')}: {error.message}</Text>;
 
   return (
     <View style={styles.container}>

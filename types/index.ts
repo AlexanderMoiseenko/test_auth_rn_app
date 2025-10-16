@@ -1,6 +1,5 @@
 import { ScreenNames } from '@/shared/config';
 
-// Тип для контекста аутентификации
 export interface AuthContextType {
   accessToken: string | null;
   isAuthenticated: boolean;

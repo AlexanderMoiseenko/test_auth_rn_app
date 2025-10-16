@@ -3,7 +3,8 @@
     "username": "Username",
     "password": "Password",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "error": "Error"
   },
   "homeScreen": {
     "goToLogin": "Go to Login"
