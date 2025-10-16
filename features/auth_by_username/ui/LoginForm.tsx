@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
+
 import { useTranslation } from 'react-i18next';
-import Input from '@/shared/ui/Input';
+
 import Button from '@/shared/ui/Button';
 import ErrorMessage from '@/shared/ui/ErrorMessage';
+import Input from '@/shared/ui/Input';
 
 interface LoginFormProps {
   username: string;
@@ -17,48 +19,46 @@ interface LoginFormProps {
   handleLogin: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = memo(
-  ({
-    username,
-    password,
-    usernameError,
-    passwordError,
-    loginError,
-    isLoggingIn,
-    disabled,
-    handleUsernameChange,
-    handlePasswordChange,
-    handleLogin,
-  }) => {
-    const { t } = useTranslation();
+const LoginForm: React.FC<LoginFormProps> = memo(function LoginForm({
+  username,
+  password,
+  usernameError,
+  passwordError,
+  loginError,
+  isLoggingIn,
+  disabled,
+  handleUsernameChange,
+  handlePasswordChange,
+  handleLogin,
+}) {
+  const { t } = useTranslation();
 
-    return (
-      <>
-        <Input
-          placeholder={t('common.username')}
-          value={username}
-          onChangeText={handleUsernameChange}
-          error={usernameError}
-        />
-        <Input
-          placeholder={t('common.password')}
-          value={password}
-          onChangeText={handlePasswordChange}
-          secureTextEntry
-          error={passwordError}
-        />
+  return (
+    <>
+      <Input
+        error={usernameError}
+        placeholder={t('common.username')}
+        value={username}
+        onChangeText={handleUsernameChange}
+      />
+      <Input
+        error={passwordError}
+        placeholder={t('common.password')}
+        secureTextEntry
+        value={password}
+        onChangeText={handlePasswordChange}
+      />
 
-        {loginError && <ErrorMessage message={t('loginScreen.userNotFound')} />}
+      {loginError && <ErrorMessage message={t('loginScreen.userNotFound')} />}
 
-        <Button
-          title={t('common.login')}
-          onPress={handleLogin}
-          loading={isLoggingIn}
-          disabled={disabled}
-        />
-      </>
-    );
-  }
-);
+      <Button
+        disabled={disabled}
+        loading={isLoggingIn}
+        title={t('common.login')}
+        onPress={handleLogin}
+      />
+    </>
+  );
+});
 
 export default LoginForm;

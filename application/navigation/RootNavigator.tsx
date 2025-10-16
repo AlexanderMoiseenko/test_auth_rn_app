@@ -1,7 +1,8 @@
 import { useAuth } from '@/context/AuthContext';
+import LoadingSpinner from '@/shared/ui/LoadingSpinner';
+
 import { AppStack } from './AppStack';
 import { AuthStack } from './AuthStack';
-import LoadingSpinner from '@/shared/ui/LoadingSpinner';
 
 export const RootNavigator = () => {
   const { isAuthenticated, isLoading } = useAuth();

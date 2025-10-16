@@ -1,5 +1,6 @@
-import apiClient from './client';
 import authService from '@/services/authService';
+
+import apiClient from './client';
 
 export const setupInterceptors = () => {
   apiClient.interceptors.response.use(

@@ -1,14 +1,16 @@
 import React, { memo, useMemo } from 'react';
+
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   TouchableOpacity,
   Text,
   StyleSheet,
   ActivityIndicator,
   View,
-  StyleProp,
-  ViewStyle,
+  type StyleProp,
+  type ViewStyle,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+
 import { colors, theme } from '@/shared/config';
 
 export const BUTTON_VARIATIONS = {
@@ -41,7 +43,14 @@ const Button: React.FC<ButtonProps> = ({
         {loading ? (
           <ActivityIndicator color={colors.white} />
         ) : (
-          <Text style={[styles.buttonText, styles[`${variant}ButtonText`]]}>
+          <Text
+            style={[
+              styles.buttonText,
+              variant === BUTTON_VARIATIONS.primary
+                ? styles.primaryButtonText
+                : styles.secondaryButtonText,
+            ]}
+          >
             {title}
           </Text>
         )}
@@ -59,18 +68,18 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity
+      disabled={disabled || loading}
       style={[
         styles.button,
         disabled || loading ? styles.disabled : {},
         props?.buttonStyle || {},
       ]}
       onPress={onPress}
-      disabled={disabled || loading}
     >
       {variant === BUTTON_VARIATIONS.primary ? (
         <LinearGradient
-          start={gradientStart}
           colors={LINEAR_GRADIENT_COLORS}
+          start={gradientStart}
           style={styles.gradient}
         >
           {buttonContent}
@@ -85,38 +94,38 @@ const Button: React.FC<ButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     borderRadius: theme.borderRadius.m,
-    width: '100%',
     marginTop: theme.spacing.xs,
     overflow: 'hidden',
-  },
-  gradient: {
-    paddingVertical: theme.spacing.s,
-    paddingHorizontal: theme.spacing.l,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  secondaryButton: {
-    paddingVertical: theme.spacing.s,
-    paddingHorizontal: theme.spacing.l,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
-    borderWidth: theme.borderWidth.s,
-    borderColor: colors.border,
-    borderRadius: theme.borderRadius.m,
+    width: '100%',
   },
   buttonText: {
-    fontSize: theme.fontSize.s,
     fontFamily: theme.fontFamily.semiBold,
+    fontSize: theme.fontSize.s,
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+  gradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: theme.spacing.l,
+    paddingVertical: theme.spacing.s,
   },
   primaryButtonText: {
     color: colors.white,
   },
+  secondaryButton: {
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    borderColor: colors.border,
+    borderRadius: theme.borderRadius.m,
+    borderWidth: theme.borderWidth.s,
+    justifyContent: 'center',
+    paddingHorizontal: theme.spacing.l,
+    paddingVertical: theme.spacing.s,
+  },
   secondaryButtonText: {
     color: colors.primary,
-  },
-  disabled: {
-    opacity: 0.5,
   },
 });
 

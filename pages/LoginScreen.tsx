@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
+
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { colors, theme } from '@/shared/config';
+
 import AuthProcess from '@/processes/auth/ui/AuthProcess';
+import { colors, theme } from '@/shared/config';
 
 const LoginScreen = () => {
   return (
@@ -17,9 +19,9 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.background,
     alignItems: 'center',
+    backgroundColor: colors.background,
+    flex: 1,
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.m,
   },

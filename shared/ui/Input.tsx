@@ -1,11 +1,6 @@
-import React, {
-  useState,
-  memo,
-  useCallback,
-  useRef,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useState, memo, useCallback, useEffect, useMemo } from 'react';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   TextInput,
   StyleSheet,
@@ -14,7 +9,7 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import { colors, theme } from '@/shared/config';
 
 interface InputProps {
@@ -35,7 +30,7 @@ const Input: React.FC<InputProps> = ({
   autoCapitalize = 'none',
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const animatedValue = useRef(new Animated.Value(value ? 1 : 0)).current;
+  const [animatedValue] = useState(new Animated.Value(value ? 1 : 0));
   const hasValue = value !== '';
 
   useEffect(() => {
@@ -65,8 +60,8 @@ const Input: React.FC<InputProps> = ({
       color: animatedValue.interpolate({
         inputRange: [0, 1],
         outputRange: [
-          !!error ? colors.error : colors.gray,
-          !!error ? colors.error : colors.primary,
+          error ? colors.error : colors.gray,
+          error ? colors.error : colors.primary,
         ],
       }),
       backgroundColor: 'transparent',
@@ -112,47 +107,47 @@ const Input: React.FC<InputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     marginBottom: theme.spacing.xs,
     marginTop: theme.spacing.s,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     width: '100%',
-    backgroundColor: colors.white,
-    borderRadius: theme.borderRadius.s,
-    borderWidth: theme.borderWidth.s,
-    borderColor: colors.border,
-    paddingTop: theme.spacing.s,
   },
-  input: {
-    flex: 1,
-    padding: theme.spacing.m,
-    paddingTop: theme.spacing.xxs,
-    paddingBottom: theme.spacing.s,
-  },
-  iconWrapper: {
-    paddingHorizontal: theme.spacing.xs,
-    marginBottom: theme.spacing.xs,
+  errorText: {
+    alignSelf: 'flex-start',
+    color: colors.error,
+    marginTop: theme.spacing.xxs,
   },
   icon: {
     color: colors.gray,
     opacity: 0.5,
   },
-  inputFocused: {
-    borderColor: colors.primary,
+  iconWrapper: {
+    marginBottom: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.xs,
+  },
+  input: {
+    flex: 1,
+    padding: theme.spacing.m,
+    paddingBottom: theme.spacing.s,
+    paddingTop: theme.spacing.xxs,
+  },
+  inputContainer: {
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    borderColor: colors.border,
+    borderRadius: theme.borderRadius.s,
+    borderWidth: theme.borderWidth.s,
+    flexDirection: 'row',
+    paddingTop: theme.spacing.s,
+    width: '100%',
   },
   inputError: {
     borderColor: colors.error,
   },
+  inputFocused: {
+    borderColor: colors.primary,
+  },
   inputSuccess: {
     borderColor: colors.blue,
-  },
-  errorText: {
-    color: colors.error,
-    alignSelf: 'flex-start',
-    marginTop: theme.spacing.xxs,
   },
 });
 

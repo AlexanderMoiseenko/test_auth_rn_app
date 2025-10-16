@@ -1,9 +1,11 @@
 import React, { useCallback, memo } from 'react';
-import { View, StyleSheet } from 'react-native';
+
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import Button from '@/shared/ui/Button';
+import { View, StyleSheet } from 'react-native';
+
 import { colors, theme, ScreenNames } from '@/shared/config';
+import Button from '@/shared/ui/Button';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -22,9 +24,9 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.background,
     alignItems: 'center',
+    backgroundColor: colors.background,
+    flex: 1,
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.m,
   },

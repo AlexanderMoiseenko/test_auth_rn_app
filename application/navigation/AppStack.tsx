@@ -1,7 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
+
 import ProfileScreen from '@/pages/ProfileScreen';
-import { AppStackParamList } from '@/types';
 import { ScreenNames } from '@/shared/config';
+import { AppStackParamList } from '@/types';
 
 const Stack = createStackNavigator<AppStackParamList>();
 

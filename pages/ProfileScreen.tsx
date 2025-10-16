@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { getUserProfile } from '@/entities/user/model/api';
 import LogoutButton from '@/features/logout/ui/LogoutButton';
-import LoadingSpinner from '@/shared/ui/LoadingSpinner';
 import { colors, theme } from '@/shared/config';
+import LoadingSpinner from '@/shared/ui/LoadingSpinner';
 
 const ProfileScreen = () => {
   const { t } = useTranslation();
@@ -43,15 +45,15 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.background,
     alignItems: 'center',
-    paddingTop: theme.spacing.xl,
+    backgroundColor: colors.background,
+    flex: 1,
     paddingHorizontal: theme.spacing.m,
+    paddingTop: theme.spacing.xl,
   },
   welcomeText: {
-    fontSize: theme.fontSize.l,
     fontFamily: theme.fontFamily.semiBold,
+    fontSize: theme.fontSize.l,
     marginBottom: theme.spacing.xl,
   },
 });

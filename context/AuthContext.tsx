@@ -6,9 +6,11 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
+
 import * as SecureStore from 'expo-secure-store';
-import { AuthContextType } from '@/types';
+
 import authService from '@/services/authService';
+import { AuthContextType } from '@/types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

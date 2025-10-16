@@ -1,6 +1,9 @@
 import React, { memo, useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+
+
 import { useAuth } from '@/context/AuthContext';
 import { loginUser } from '@/entities/user/model/api';
 import LoginForm from '@/features/auth_by_username/ui/LoginForm';
@@ -44,7 +47,7 @@ const AuthProcess = () => {
     if (isValid) {
       mutation.mutate({ username, password });
     }
-  }, [username, password, mutation]);
+  }, [username, password, mutation, t]);
 
   const disabledButtonState = useMemo(
     () => !username && !password,

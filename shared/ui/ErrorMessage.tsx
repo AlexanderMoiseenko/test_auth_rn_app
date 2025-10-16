@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { colors, theme } from '@/shared/config';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, StyleSheet } from 'react-native';
+
+import { colors, theme } from '@/shared/config';
 
 interface ErrorMessageProps {
   message: string;
@@ -25,14 +27,14 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
 
 const styles = StyleSheet.create({
   errorContainer: {
-    backgroundColor: colors.errorBackground,
-    padding: theme.spacing.xs,
-    borderRadius: theme.borderRadius.s,
-    width: '100%',
-    minHeight: 58,
-    marginVertical: theme.spacing.xs,
     alignItems: 'center',
+    backgroundColor: colors.errorBackground,
+    borderRadius: theme.borderRadius.s,
     flexDirection: 'row',
+    marginVertical: theme.spacing.xs,
+    minHeight: 58,
+    padding: theme.spacing.xs,
+    width: '100%',
   },
   errorText: {
     color: colors.white,

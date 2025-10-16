@@ -1,6 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { View, Text, StyleSheet } from 'react-native';
+
 import { colors, theme } from '@/shared/config';
 
 interface Props extends WithTranslation {
@@ -41,20 +43,20 @@ class ErrorBoundary extends Component<Props, State> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: theme.fontSize.m,
-    fontFamily: theme.fontFamily.semiBold,
-    marginBottom: theme.spacing.xs,
+    flex: 1,
+    justifyContent: 'center',
   },
   subtitle: {
-    fontSize: theme.fontSize.s,
     color: colors.gray,
     fontFamily: theme.fontFamily.regular,
+    fontSize: theme.fontSize.s,
+  },
+  title: {
+    fontFamily: theme.fontFamily.semiBold,
+    fontSize: theme.fontSize.m,
+    marginBottom: theme.spacing.xs,
   },
 });
 
