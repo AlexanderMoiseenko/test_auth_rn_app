@@ -6,6 +6,7 @@ export interface AuthContextType {
   isLoading: boolean;
   login: (accessToken: string) => Promise<void>;
   logout: () => Promise<void>;
+  logoutAndNavigateToLogin: () => Promise<void>;
 }
 
 export type AuthStackParamList = {

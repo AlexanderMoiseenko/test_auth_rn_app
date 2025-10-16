@@ -1,10 +1,12 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 
+import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useAuth } from '@/context/AuthContext';
 import { getUserProfile } from '@/entities/user/model/api';
 import LogoutButton from '@/features/logout/ui/LogoutButton';
 import { colors, theme } from '@/shared/config';
@@ -12,6 +14,7 @@ import LoadingSpinner from '@/shared/ui/LoadingSpinner';
 
 const ProfileScreen = () => {
   const { t } = useTranslation();
+  const { logoutAndNavigateToLogin } = useAuth();
   const {
     data: profile,
     isLoading,
@@ -25,36 +28,61 @@ const ProfileScreen = () => {
   if (isLoading) return <LoadingSpinner />;
   if (isError)
     return (
-      <Text>
-        {t('common.error')}: {error.message}
-      </Text>
+      <View style={styles.container}>
+        <Text>{t('common.error')}: </Text>
+        {error && <Text>{error.message}</Text>}
+      </View>
     );
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.welcomeText}>
-        {t('profileScreen.welcome', {
-          firstName: profile?.firstName,
-          lastName: profile?.lastName,
-        })}
-      </Text>
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={logoutAndNavigateToLogin}
+          style={styles.backButton}
+        >
+          <Ionicons
+            name='chevron-back-outline'
+            size={theme.iconSize.m}
+            color={colors.black}
+          />
+        </TouchableOpacity>
+        <Text style={styles.welcomeText}>
+          {t('profileScreen.welcome', {
+            firstName: profile?.firstName,
+            lastName: profile?.lastName,
+          })}
+        </Text>
+      </View>
       <LogoutButton />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  backButton: {
+    position: 'absolute',
+    zIndex: 1,
+  },
   container: {
     alignItems: 'center',
     backgroundColor: colors.background,
     flex: 1,
     paddingHorizontal: theme.spacing.m,
-    paddingTop: theme.spacing.xl,
+    paddingTop: 20,
+  },
+  header: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: theme.spacing.m,
+    width: '100%',
   },
   welcomeText: {
     fontFamily: theme.fontFamily.semiBold,
-    fontSize: theme.fontSize.l,
-    marginBottom: theme.spacing.xl,
+    fontSize: theme.fontSize.m,
+    justifyContent: 'center',
+    textAlign: 'center',
+    width: '100%',
   },
 });
 

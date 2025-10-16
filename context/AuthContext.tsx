@@ -7,16 +7,21 @@ import React, {
   useMemo,
 } from 'react';
 
+import { NavigationContainerRefWithCurrent, StackActions } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 
 import authService from '@/services/authService';
+import { ScreenNames } from '@/shared/config';
 import { AuthContextType } from '@/types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: React.FC<{
+  children: React.ReactNode;
+  navigationRef: NavigationContainerRefWithCurrent<
+    ReactNavigation.RootParamList
+  >;
+}> = ({ children, navigationRef }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,6 +29,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setToken(null);
     await SecureStore.deleteItemAsync('userToken');
   }, []);
+
+  const logoutAndNavigateToLogin = useCallback(async () => {
+    await logout();
+    if (navigationRef.current) {
+      navigationRef.current.dispatch(StackActions.replace(ScreenNames.Login));
+    }
+  }, [logout, navigationRef]);
 
   useEffect(() => {
     const loadToken = async () => {
@@ -53,8 +65,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       isLoading,
       login,
       logout,
+      logoutAndNavigateToLogin,
     }),
-    [token, isLoading, login, logout]
+    [token, isLoading, login, logout, logoutAndNavigateToLogin]
   );
 
   return (
