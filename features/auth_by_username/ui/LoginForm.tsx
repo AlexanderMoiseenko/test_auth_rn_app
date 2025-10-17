@@ -49,7 +49,7 @@ const LoginForm: React.FC<LoginFormProps> = memo(function LoginForm({
         onChangeText={handlePasswordChange}
       />
 
-      {loginError && <ErrorMessage message={t('loginScreen.userNotFound')} />}
+      {loginError && <ErrorMessage message={loginError} />}
 
       <Button
         disabled={disabled}

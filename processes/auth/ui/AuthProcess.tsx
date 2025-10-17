@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useMemo, useState } from 'react';
 
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-
 
 import { useAuth } from '@/context/AuthContext';
 import { loginUser } from '@/entities/user/model/api';
@@ -11,10 +11,24 @@ import LoginForm from '@/features/auth_by_username/ui/LoginForm';
 const AuthProcess = () => {
   const { t } = useTranslation();
   const auth = useAuth();
+  const [errorMessage, setErrorMessage] = useState('');
+
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       auth.login(data.accessToken);
+    },
+    onError: (error: AxiosError) => {
+      // it should be 401 but it's 400
+      // if (error.response && error.response.status === 401) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(t('loginScreen.userNotFound'));
+      } else {
+        setErrorMessage(t('loginScreen.errors.generic'));
+      }
+    },
+    onMutate: () => {
+      setErrorMessage('');
     },
   });
 
@@ -64,7 +78,7 @@ const AuthProcess = () => {
       handlePasswordChange={handlePasswordChange}
       handleLogin={handleLogin}
       isLoggingIn={mutation.isPending}
-      loginError={mutation.error?.message}
+      loginError={errorMessage}
       disabled={disabledButtonState}
     />
   );
