@@ -69,4 +69,21 @@ export default [
       '@typescript-eslint/no-namespace': 'off',
     },
   },
+  // Allow Reanimated shared value mutations (progress.value = ...) in UI components
+  {
+    files: [
+      "shared/ui/**/*.ts",
+      "shared/ui/**/*.tsx",
+    ],
+    rules: {
+      'react-hooks/immutability': 'off',
+    },
+  },
+  // Allow CommonJS require in Jest mock for Reanimated
+  {
+    files: ["__mocks__/react-native-reanimated.js"],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
 ];

@@ -1,4 +1,4 @@
-import React, { useState, memo, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
@@ -7,8 +7,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  interpolateColor,
+} from 'react-native-reanimated';
 
 import { colors, theme } from '@/shared/config';
 
@@ -32,44 +37,54 @@ const Input: React.FC<InputProps> = ({
   testID,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [animatedValue] = useState(new Animated.Value(value ? 1 : 0));
   const hasValue = value !== '';
 
-  useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: isFocused || hasValue ? 1 : 0,
-      duration: 150,
-      useNativeDriver: false,
-    }).start();
-  }, [isFocused, hasValue, animatedValue]);
+  // Using a shared value for animation, which can be updated from the UI thread.
+  const progress = useSharedValue(isFocused || hasValue ? 1 : 0);
 
-  const handleFocus = useCallback(() => setIsFocused(true), []);
-  const handleBlur = useCallback(() => setIsFocused(false), []);
+  const handleFocus = useCallback(() => {
+    setIsFocused(true);
+    // Animate progress to 1 (focused state)
+    progress.value = withTiming(1, { duration: 150 });
+  }, [progress]);
+
+  const handleBlur = useCallback(() => {
+    setIsFocused(false);
+    // Animate progress to 0 (blurred state) if there is no value
+    if (!hasValue) {
+      progress.value = withTiming(0, { duration: 150 });
+    }
+  }, [hasValue, progress]);
+
   const handleClear = useCallback(() => onChangeText(''), [onChangeText]);
 
-  const labelStyle = useMemo(() => {
+  // useAnimatedStyle runs on the UI thread, ensuring smooth animations.
+  const labelStyle = useAnimatedStyle(() => {
+    const top = withTiming(isFocused || hasValue ? -1 : theme.spacing.s, {
+      duration: 150,
+    });
+    const fontSize = withTiming(isFocused || hasValue ? 11 : theme.fontSize.s, {
+      duration: 150,
+    });
+    const color = interpolateColor(
+      progress.value,
+      [0, 1],
+      [
+        error ? colors.redDark : colors.gray,
+        error ? colors.redDark : colors.primary,
+      ]
+    );
+
     return {
       position: 'absolute' as const,
       left: theme.spacing.s,
-      top: animatedValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [theme.spacing.s, -1],
-      }),
-      fontSize: animatedValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [theme.fontSize.s, 11],
-      }),
-      color: animatedValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [
-          error ? colors.redDark : colors.gray,
-          error ? colors.redDark : colors.primary,
-        ],
-      }),
+      top,
+      fontSize,
+      color,
       backgroundColor: 'transparent',
       paddingHorizontal: theme.spacing.xxs,
     };
-  }, [animatedValue, error]);
+  });
 
   return (
     <View style={styles.container}>

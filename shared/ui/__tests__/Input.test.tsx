@@ -1,50 +1,24 @@
 import React from 'react';
 
-import { render, fireEvent, act } from '@testing-library/react-native';
-import { StyleSheet, Animated } from 'react-native';
+import { render, fireEvent } from '@testing-library/react-native';
+import { StyleSheet } from 'react-native';
 
 import { colors, theme } from '@/shared/config';
 
 import Input from '../Input';
 
-// Use fake timers to control animations
-jest.useFakeTimers();
+jest.mock('react-native-reanimated');
 
-// Ensure Animated.timing updates happen synchronously in tests
-let timingSpy: jest.SpyInstance;
-beforeAll(() => {
-  timingSpy = jest
-    .spyOn(Animated as unknown as { timing: typeof Animated.timing }, 'timing')
-    .mockImplementation((value: unknown, config: unknown) => {
-      const v = value as { setValue?: (n: number) => void } | null;
-      const c = config as { toValue?: number } | null;
-      return {
-        start: (cb?: () => void) => {
-          if (
-            typeof v?.setValue === 'function' &&
-            c &&
-            typeof c.toValue !== 'undefined'
-          ) {
-            v.setValue(c.toValue as number);
-          }
-          if (cb) cb();
-        },
-        stop: () => {},
-      } as unknown as Animated.CompositeAnimation;
-    });
-});
-
-afterAll(() => {
-  timingSpy?.mockRestore();
-});
-
+// Helper to resolve Animated interpolation values in tests
 const resolveAnimated = (v: unknown) => {
-  if (typeof v === 'number') return v;
+  if (typeof v === 'number' || typeof v === 'string') return v;
   const maybe = v as { __getValue?: () => unknown } | null | undefined;
-  if (maybe && typeof maybe.__getValue === 'function')
-    return maybe.__getValue();
+  if (maybe && typeof maybe.__getValue === 'function') return maybe.__getValue();
   return v as number;
 };
+
+// Use fake timers to control Animated.timing scheduling
+jest.useFakeTimers();
 
 describe('Input', () => {
   it('renders correctly with a placeholder', () => {
@@ -126,16 +100,13 @@ describe('Input', () => {
     const textInput = getByTestId('input');
     const container = getByTestId('input-container');
 
-    act(() => {
-      fireEvent(textInput, 'focus');
-      jest.runAllTimers();
-    });
+    // Focus the input
+    fireEvent(textInput, 'focus');
     const focusedStyle = StyleSheet.flatten(container.props.style);
     expect(focusedStyle.borderColor).toBe(colors.primary);
-    act(() => {
-      fireEvent(textInput, 'blur');
-      jest.runAllTimers();
-    });
+
+    // Blur the input
+    fireEvent(textInput, 'blur');
     const blurredStyle = StyleSheet.flatten(container.props.style);
     expect(blurredStyle.borderColor).toBe(colors.grayLight);
   });
@@ -166,25 +137,23 @@ describe('Input', () => {
     const textInput = getByTestId('input');
     const label = getByText('Animated Label');
 
-    // Before focus
-    act(() => {
-      jest.runAllTimers();
-    });
-    const initialStyle = StyleSheet.flatten(label.props.style);
-    expect(resolveAnimated(initialStyle.top)).toBe(theme.spacing.s);
+    // Initial style
+    let style = StyleSheet.flatten(label.props.style);
+    expect(resolveAnimated(style.top)).toBe(theme.spacing.s);
 
-    act(() => {
-      fireEvent(textInput, 'focus');
-      jest.runAllTimers();
-    });
-    const focusedStyle = StyleSheet.flatten(label.props.style);
-    expect(resolveAnimated(focusedStyle.top)).toBe(-1);
+    // Focus the input
+    fireEvent(textInput, 'focus');
+    // advance by the animation duration used in Input.tsx (150ms)
+    jest.advanceTimersByTime(150);
 
-    act(() => {
-      fireEvent(textInput, 'blur');
-      jest.runAllTimers();
-    });
-    const blurredStyle = StyleSheet.flatten(label.props.style);
-    expect(resolveAnimated(blurredStyle.top)).toBe(theme.spacing.s);
+    style = StyleSheet.flatten(label.props.style);
+    expect(resolveAnimated(style.top)).toBe(-1);
+
+    // Blur the input
+    fireEvent(textInput, 'blur');
+    jest.advanceTimersByTime(150);
+
+    style = StyleSheet.flatten(label.props.style);
+    expect(resolveAnimated(style.top)).toBe(theme.spacing.s);
   });
 });
