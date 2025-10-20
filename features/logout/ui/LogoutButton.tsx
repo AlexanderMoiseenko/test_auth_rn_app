@@ -11,6 +11,7 @@ const LogoutButton = memo(function LogoutButton() {
 
   return (
     <Button
+      testID='button-logout'
       title={t('common.logout')}
       variant={BUTTON_VARIATIONS.secondary}
       onPress={logout}

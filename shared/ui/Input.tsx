@@ -19,6 +19,7 @@ interface InputProps {
   secureTextEntry?: boolean;
   error?: string;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  testID?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -28,6 +29,7 @@ const Input: React.FC<InputProps> = ({
   secureTextEntry,
   error,
   autoCapitalize = 'none',
+  testID,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [animatedValue] = useState(new Animated.Value(value ? 1 : 0));
@@ -72,6 +74,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <View style={styles.container}>
       <View
+        testID='input-container'
         style={[
           styles.inputContainer,
           isFocused && styles.inputFocused,
@@ -81,6 +84,7 @@ const Input: React.FC<InputProps> = ({
       >
         <Animated.Text style={labelStyle}>{placeholder}</Animated.Text>
         <TextInput
+          testID={testID}
           autoCapitalize={autoCapitalize}
           style={styles.input}
           value={value}
@@ -90,7 +94,7 @@ const Input: React.FC<InputProps> = ({
           onBlur={handleBlur}
         />
         {value.length > 0 && (
-          <TouchableOpacity onPress={handleClear} style={styles.iconWrapper}>
+          <TouchableOpacity testID='clear-button' onPress={handleClear} style={styles.iconWrapper}>
             <MaterialCommunityIcons
               name='close-circle'
               style={styles.icon}

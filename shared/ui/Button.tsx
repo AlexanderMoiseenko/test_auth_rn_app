@@ -27,6 +27,7 @@ interface ButtonProps {
   loading?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   variant?: (typeof BUTTON_VARIATIONS)[keyof typeof BUTTON_VARIATIONS];
+  testID?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -36,6 +37,7 @@ const Button: React.FC<ButtonProps> = ({
   loading,
   variant = BUTTON_VARIATIONS.primary,
   buttonStyle,
+  testID,
 }) => {
   const buttonContent = useMemo(
     () => (
@@ -68,6 +70,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity
+      testID={testID}
       disabled={disabled || loading}
       style={[
         styles.button,

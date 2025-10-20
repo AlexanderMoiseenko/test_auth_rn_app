@@ -38,6 +38,7 @@ const ProfileScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
+          testID='button-back'
           onPress={logoutAndNavigateToLogin}
           style={styles.backButton}
         >

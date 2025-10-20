@@ -36,12 +36,14 @@ const LoginForm: React.FC<LoginFormProps> = memo(function LoginForm({
   return (
     <>
       <Input
+        testID='input-username'
         error={usernameError}
         placeholder={t('common.username')}
         value={username}
         onChangeText={handleUsernameChange}
       />
       <Input
+        testID='input-password'
         error={passwordError}
         placeholder={t('common.password')}
         secureTextEntry
@@ -52,6 +54,7 @@ const LoginForm: React.FC<LoginFormProps> = memo(function LoginForm({
       {loginError && <ErrorMessage message={loginError} />}
 
       <Button
+        testID='button-login'
         disabled={disabled}
         loading={isLoggingIn}
         title={t('common.login')}
