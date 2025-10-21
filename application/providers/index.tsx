@@ -18,6 +18,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AuthProvider } from '@/context/AuthContext';
 import { setupInterceptors } from '@/shared/api/axiosSetup';
+import { loadTokenFromStorage } from '@/shared/api/client';
 import { colors } from '@/shared/config';
 import ErrorBoundary from '@/shared/ui/ErrorBoundary';
 
@@ -38,6 +39,7 @@ const AppProviders = () => {
 
   useEffect(() => {
     setupInterceptors();
+    loadTokenFromStorage();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
