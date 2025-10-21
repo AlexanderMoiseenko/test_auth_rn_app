@@ -1,14 +1,17 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
-import { StyleSheet, Platform } from 'react-native';
+import * as RN from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import { ThemeType, useTheme } from '@/context/ThemeContext';
 import AuthProcess from '@/processes/auth/ui/AuthProcess';
-import { colors, theme } from '@/shared/config';
 
 const scrollResetCoords = { x: 0, y: 0 };
 
 const LoginScreen = () => {
+  const { theme } = useTheme();
+  const styles = useMemo(() => getStyles(theme), [theme]);
+
   return (
     <KeyboardAwareScrollView
       style={styles.container}
@@ -16,7 +19,7 @@ const LoginScreen = () => {
       resetScrollToCoords={scrollResetCoords}
       keyboardShouldPersistTaps='handled'
       enableOnAndroid={true}
-      enableAutomaticScroll={Platform.OS === 'ios'}
+      enableAutomaticScroll={RN.Platform.OS === 'ios'}
       extraScrollHeight={20}
     >
       <AuthProcess />
@@ -24,17 +27,18 @@ const LoginScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    flex: 1,
-  },
-  contentContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    marginTop: -50, // push the form up a bit
-    paddingHorizontal: theme.spacing.m,
-  },
-});
+const getStyles = (theme: ThemeType) =>
+  RN.StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.background,
+      flex: 1,
+    },
+    contentContainer: {
+      flexGrow: 1,
+      justifyContent: 'center',
+      marginTop: -50, // push the form up a bit
+      paddingHorizontal: theme.spacing.m,
+    },
+  });
 
 export default memo(LoginScreen);

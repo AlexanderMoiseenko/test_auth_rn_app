@@ -17,13 +17,13 @@ import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AuthProvider } from '@/context/AuthContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 import { setupInterceptors } from '@/shared/api/axiosSetup';
 import { loadTokenFromStorage } from '@/shared/api/client';
 import { colors } from '@/shared/config';
 import ErrorBoundary from '@/shared/ui/ErrorBoundary';
 
 import { RootNavigator } from '../navigation/RootNavigator';
-
 import '@/shared/config/i18n'; // Initialize i18n
 
 SplashScreen.preventAutoHideAsync();
@@ -36,31 +36,29 @@ const AppProviders = () => {
     NotoSans_500Medium,
     NotoSans_600SemiBold,
   });
-
   useEffect(() => {
     setupInterceptors();
     loadTokenFromStorage();
   }, []);
-
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
-
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
   return (
     <SafeAreaProvider>
       <View style={styles.container} onLayout={onLayoutRootView}>
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
             <AuthProvider navigationRef={navigationRef}>
-              <NavigationContainer ref={navigationRef}>
-                <RootNavigator />
-              </NavigationContainer>
+              <ThemeProvider>
+                <NavigationContainer ref={navigationRef}>
+                  <RootNavigator />
+                </NavigationContainer>
+              </ThemeProvider>
             </AuthProvider>
           </QueryClientProvider>
         </ErrorBoundary>
@@ -68,12 +66,10 @@ const AppProviders = () => {
     </SafeAreaProvider>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     flex: 1,
   },
 });
-
 export default AppProviders;
