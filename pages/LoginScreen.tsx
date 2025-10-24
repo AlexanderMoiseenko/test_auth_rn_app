@@ -20,6 +20,7 @@ const LoginScreen = () => {
       keyboardShouldPersistTaps='handled'
       enableOnAndroid={true}
       enableAutomaticScroll={RN.Platform.OS === 'ios'}
+      contentInsetAdjustmentBehavior='automatic'
       extraScrollHeight={20}
     >
       <AuthProcess />
