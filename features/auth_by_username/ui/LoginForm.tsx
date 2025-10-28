@@ -28,15 +28,15 @@ const LoginForm: React.FC<LoginFormProps> = memo(function LoginForm({
   return (
     <>
       <ControlledInput<LoginSchema>
-        testID='input-username'
+        testID="input-username"
         control={control}
-        name='username'
+        name="username"
         placeholder={t('common.username')}
       />
       <ControlledInput<LoginSchema>
-        testID='input-password'
+        testID="input-password"
         control={control}
-        name='password'
+        name="password"
         placeholder={t('common.password')}
         secureTextEntry
       />
@@ -44,7 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = memo(function LoginForm({
       {!!rootError && <ErrorMessage message={rootError} />}
 
       <Button
-        testID='button-login'
+        testID="button-login"
         disabled={disabled}
         loading={isLoading}
         title={t('common.login')}

@@ -17,10 +17,10 @@ const LoginScreen = () => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       resetScrollToCoords={scrollResetCoords}
-      keyboardShouldPersistTaps='handled'
+      keyboardShouldPersistTaps="handled"
       enableOnAndroid={true}
       enableAutomaticScroll={RN.Platform.OS === 'ios'}
-      contentInsetAdjustmentBehavior='automatic'
+      contentInsetAdjustmentBehavior="automatic"
       extraScrollHeight={20}
     >
       <AuthProcess />
