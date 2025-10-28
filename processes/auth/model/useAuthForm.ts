@@ -1,21 +1,34 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useForm, FieldErrors, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@/context/AuthContext';
 import { loginUser } from '@/entities/user/model/api';
+import {
+  loginSchema,
+  type LoginSchema,
+} from '@/features/auth_by_username/model/schema';
 
 export const useAuthForm = () => {
   const { t } = useTranslation();
   const auth = useAuth();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [usernameError, setUsernameError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { username: '', password: '' },
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+  });
 
   const mutation = useMutation({
     mutationFn: loginUser,
@@ -23,43 +36,45 @@ export const useAuthForm = () => {
       auth.login(data.accessToken);
     },
     onError: (error: AxiosError) => {
-      // for invalid creds it should 401, but it's 400 here
-      if (error.response && error.response.status === 400) {
-        setErrorMessage(t('loginScreen.userNotFound'));
+      const status = error.response?.status;
+      if (status === 400 || status === 401) {
+        // incorrect credentials
+        setError('root', { message: t('loginScreen.userNotFound') });
       } else {
-        setErrorMessage(t('loginScreen.errors.generic'));
+        setError('root', { message: t('loginScreen.errors.generic') });
       }
-    },
-    onMutate: () => {
-      setErrorMessage('');
     },
   });
 
-  const handleUsernameChange = (text: string) => {
-    setUsername(text);
-    if (text) setUsernameError('');
-  };
+  const onSubmit = useCallback(
+    (values: LoginSchema) => {
+      return mutation.mutateAsync(values);
+    },
+    [mutation]
+  );
 
-  const handlePasswordChange = (text: string) => {
-    setPassword(text);
-    if (text) setPasswordError('');
-  };
+  const handleUsernameChange = useCallback(
+    (text: string) => {
+      setValue('username', text, { shouldValidate: true, shouldDirty: true });
+    },
+    [setValue]
+  );
+
+  const handlePasswordChange = useCallback(
+    (text: string) => {
+      setValue('password', text, { shouldValidate: true, shouldDirty: true });
+    },
+    [setValue]
+  );
 
   const handleLogin = useCallback(() => {
-    let isValid = true;
-    if (!username) {
-      setUsernameError(t('loginScreen.validation.usernameRequired'));
-      isValid = false;
-    }
-    if (!password) {
-      setPasswordError(t('loginScreen.validation.passwordRequired'));
-      isValid = false;
-    }
+    handleSubmit(onSubmit)();
+  }, [handleSubmit, onSubmit]);
 
-    if (isValid) {
-      mutation.mutate({ username, password });
-    }
-  }, [username, password, mutation, t]);
+  const [username, password] = useWatch({
+    control,
+    name: ['username', 'password'],
+  });
 
   const disabledButtonState = useMemo(
     () => !username && !password,
@@ -67,15 +82,23 @@ export const useAuthForm = () => {
   );
 
   return {
-    username,
-    password,
-    usernameError,
-    passwordError,
+    username: (username as string) ?? '',
+    password: (password as string) ?? '',
+    usernameError: errors.username?.message ?? '',
+    passwordError: errors.password?.message ?? '',
     handleUsernameChange,
     handlePasswordChange,
     handleLogin,
-    isLoggingIn: mutation.isPending,
-    loginError: errorMessage,
+    isLoggingIn: isSubmitting || mutation.isPending,
+    loginError:
+      (
+        errors as FieldErrors<LoginSchema> & {
+          root?: { message?: string };
+        }
+      ).root?.message ?? '',
     disabled: disabledButtonState,
+
+    control,
+    submit: handleSubmit(onSubmit),
   };
 };

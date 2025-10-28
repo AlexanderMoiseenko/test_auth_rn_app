@@ -1,64 +1,54 @@
 import React, { memo } from 'react';
 
+import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { LoginSchema } from '@/features/auth_by_username/model/schema';
 import Button from '@/shared/ui/Button';
 import ErrorMessage from '@/shared/ui/ErrorMessage';
-import Input from '@/shared/ui/Input';
+import ControlledInput from '@/shared/ui/form/ControlledInput';
 
 interface LoginFormProps {
-  username: string;
-  password: string;
-  usernameError?: string;
-  passwordError?: string;
-  loginError?: string;
-  isLoggingIn: boolean;
-  disabled: boolean;
-  handleUsernameChange: (text: string) => void;
-  handlePasswordChange: (text: string) => void;
-  handleLogin: () => void;
+  control: Control<LoginSchema>;
+  onSubmit: () => void;
+  isLoading: boolean;
+  disabled?: boolean;
+  rootError?: string;
 }
 
 const LoginForm: React.FC<LoginFormProps> = memo(function LoginForm({
-  username,
-  password,
-  usernameError,
-  passwordError,
-  loginError,
-  isLoggingIn,
+  control,
+  onSubmit,
+  isLoading,
   disabled,
-  handleUsernameChange,
-  handlePasswordChange,
-  handleLogin,
+  rootError,
 }) {
   const { t } = useTranslation();
 
   return (
     <>
-      <Input
+      <ControlledInput<LoginSchema>
         testID='input-username'
-        error={usernameError}
+        control={control}
+        name='username'
         placeholder={t('common.username')}
-        value={username}
-        onChangeText={handleUsernameChange}
       />
-      <Input
+      <ControlledInput<LoginSchema>
         testID='input-password'
-        error={passwordError}
+        control={control}
+        name='password'
         placeholder={t('common.password')}
         secureTextEntry
-        value={password}
-        onChangeText={handlePasswordChange}
       />
 
-      {loginError && <ErrorMessage message={loginError} />}
+      {!!rootError && <ErrorMessage message={rootError} />}
 
       <Button
         testID='button-login'
         disabled={disabled}
-        loading={isLoggingIn}
+        loading={isLoading}
         title={t('common.login')}
-        onPress={handleLogin}
+        onPress={onSubmit}
       />
     </>
   );

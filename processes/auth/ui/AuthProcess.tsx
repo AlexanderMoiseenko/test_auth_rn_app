@@ -5,30 +5,14 @@ import LoginForm from '@/features/auth_by_username/ui/LoginForm';
 import { useAuthForm } from '../model/useAuthForm';
 
 const AuthProcess = () => {
-  const {
-    username,
-    password,
-    usernameError,
-    passwordError,
-    handleUsernameChange,
-    handlePasswordChange,
-    handleLogin,
-    isLoggingIn,
-    loginError,
-    disabled,
-  } = useAuthForm();
+  const { control, submit, isLoggingIn, loginError, disabled } = useAuthForm();
 
   return (
     <LoginForm
-      username={username}
-      password={password}
-      usernameError={usernameError}
-      passwordError={passwordError}
-      handleUsernameChange={handleUsernameChange}
-      handlePasswordChange={handlePasswordChange}
-      handleLogin={handleLogin}
-      isLoggingIn={isLoggingIn}
-      loginError={loginError}
+      control={control}
+      onSubmit={submit}
+      isLoading={isLoggingIn}
+      rootError={loginError}
       disabled={disabled}
     />
   );
