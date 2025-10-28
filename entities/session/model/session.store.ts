@@ -1,7 +1,4 @@
-import {
-  NavigationContainerRefWithCurrent,
-  StackActions,
-} from '@react-navigation/native';
+import { NavigationContainerRefWithCurrent, StackActions } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { create } from 'zustand';
 
@@ -16,7 +13,7 @@ interface SessionState {
   isLoggingOut: boolean;
   navigationRef: NavigationContainerRefWithCurrent<ReactNavigation.RootParamList> | null;
   init: (
-    navigationRef: NavigationContainerRefWithCurrent<ReactNavigation.RootParamList>
+    navigationRef: NavigationContainerRefWithCurrent<ReactNavigation.RootParamList>,
   ) => Promise<void>;
   login: (token: string) => Promise<void>;
   logout: () => Promise<void>;
