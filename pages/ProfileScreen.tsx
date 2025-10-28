@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAuth } from '@/context/AuthContext';
@@ -37,17 +37,18 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
+        <Pressable
           testID='button-back'
           onPress={logoutAndNavigateToLogin}
-          style={styles.backButton}
+          style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.5 }]}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
           <Ionicons
             name='chevron-back-outline'
             size={theme.iconSize.m}
             color={colors.black}
           />
-        </TouchableOpacity>
+        </Pressable>
         <Text style={styles.welcomeText}>
           {t('profileScreen.welcome', {
             firstName: profile?.firstName,

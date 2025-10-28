@@ -7,7 +7,6 @@ const apiClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_BASE_URL,
 });
 
-// synchronous interceptor
 apiClient.interceptors.request.use((config) => {
   if (inMemoryToken) {
     config.headers.Authorization = `Bearer ${inMemoryToken}`;
@@ -15,7 +14,6 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// functions for token management
 export const setAuthToken = (token: string | null) => {
   inMemoryToken = token;
 };

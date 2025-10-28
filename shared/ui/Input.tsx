@@ -17,6 +17,7 @@ interface InputProps {
   error?: string;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   testID?: string;
+  onBlur?: () => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -27,6 +28,7 @@ const Input: React.FC<InputProps> = ({
   error,
   autoCapitalize = 'none',
   testID,
+  onBlur,
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const hasValue = value !== '';
@@ -37,7 +39,10 @@ const Input: React.FC<InputProps> = ({
   const { labelStyle } = useAnimatedInput({ isFocused, hasValue, error });
 
   const handleFocus = useCallback(() => setIsFocused(true), []);
-  const handleBlur = useCallback(() => setIsFocused(false), []);
+  const handleBlur = useCallback(() => {
+    setIsFocused(false);
+    if (onBlur) onBlur();
+  }, [onBlur]);
   const handleClear = useCallback(() => onChangeText(''), [onChangeText]);
 
   return (
