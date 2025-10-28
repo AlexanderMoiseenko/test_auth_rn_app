@@ -1,27 +1,19 @@
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
-
-let inMemoryToken: string | null = null;
 
 const apiClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_BASE_URL,
 });
 
-apiClient.interceptors.request.use((config) => {
-  if (inMemoryToken) {
-    config.headers.Authorization = `Bearer ${inMemoryToken}`;
+export function setAuthToken(token: string | null) {
+  if (token) {
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    clearAuthToken();
   }
-  return config;
-});
+}
 
-export const setAuthToken = (token: string | null) => {
-  inMemoryToken = token;
-};
-
-export const loadTokenFromStorage = async () => {
-  const token = await SecureStore.getItemAsync('userToken');
-  setAuthToken(token);
-  return token;
-};
+export function clearAuthToken() {
+  delete apiClient.defaults.headers.common['Authorization'];
+}
 
 export default apiClient;

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useMemo } from 'react';
 
 import {
   useFonts,
@@ -12,15 +12,12 @@ import {
 } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as SplashScreen from 'expo-splash-screen';
-import { StyleSheet } from 'react-native';
-import { View } from 'react-native';
+import * as RN from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AuthProvider } from '@/context/AuthContext';
-import { ThemeProvider } from '@/context/ThemeContext';
+import { ThemeProvider, useTheme, ThemeType } from '@/context/ThemeContext';
+import { useSessionStore } from '@/entities/session/model/session.store';
 import { setupInterceptors } from '@/shared/api/axiosSetup';
-import { loadTokenFromStorage } from '@/shared/api/client';
-import { colors } from '@/shared/config';
 import ErrorBoundary from '@/shared/ui/ErrorBoundary';
 
 import { RootNavigator } from '../navigation/RootNavigator';
@@ -36,10 +33,16 @@ const AppProviders = () => {
     NotoSans_500Medium,
     NotoSans_600SemiBold,
   });
+
+  const { init, logout } = useSessionStore();
+  const { theme } = useTheme();
+  const styles = useMemo(() => getStyles(theme), [theme]);
+
   useEffect(() => {
-    setupInterceptors();
-    loadTokenFromStorage();
-  }, []);
+    init(navigationRef);
+    setupInterceptors(logout);
+  }, [init, logout, navigationRef]);
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
       await SplashScreen.hideAsync();
@@ -50,26 +53,26 @@ const AppProviders = () => {
   }
   return (
     <SafeAreaProvider>
-      <View style={styles.container} onLayout={onLayoutRootView}>
+      <RN.View style={styles.container} onLayout={onLayoutRootView}>
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
-            <AuthProvider navigationRef={navigationRef}>
-              <ThemeProvider>
-                <NavigationContainer ref={navigationRef}>
-                  <RootNavigator />
-                </NavigationContainer>
-              </ThemeProvider>
-            </AuthProvider>
+            <ThemeProvider>
+              <NavigationContainer ref={navigationRef}>
+                <RootNavigator />
+              </NavigationContainer>
+            </ThemeProvider>
           </QueryClientProvider>
         </ErrorBoundary>
-      </View>
+      </RN.View>
     </SafeAreaProvider>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    flex: 1,
-  },
-});
+const getStyles = (theme: ThemeType) =>
+  RN.StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.background,
+      flex: 1,
+    },
+  });
+
 export default AppProviders;

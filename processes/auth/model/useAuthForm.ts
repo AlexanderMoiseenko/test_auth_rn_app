@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 import { useForm, FieldErrors, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from '@/context/AuthContext';
+import { useSessionStore } from '@/entities/session/model/session.store';
 import { loginUser } from '@/entities/user/model/api';
 import {
   loginSchema,
@@ -15,7 +15,7 @@ import {
 
 export const useAuthForm = () => {
   const { t } = useTranslation();
-  const auth = useAuth();
+  const { login } = useSessionStore();
 
   const {
     control,
@@ -33,7 +33,7 @@ export const useAuthForm = () => {
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      auth.login(data.accessToken);
+      login(data.accessToken);
     },
     onError: (error: AxiosError) => {
       const status = error.response?.status;

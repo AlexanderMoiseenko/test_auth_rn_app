@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Text, StyleSheet, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useAuth } from '@/context/AuthContext';
+import { useSessionStore } from '@/entities/session/model/session.store';
 import { getUserProfile } from '@/entities/user/model/api';
 import LogoutButton from '@/features/logout/ui/LogoutButton';
 import { colors, theme } from '@/shared/config';
@@ -14,7 +14,7 @@ import LoadingSpinner from '@/shared/ui/LoadingSpinner';
 
 const ProfileScreen = () => {
   const { t } = useTranslation();
-  const { logoutAndNavigateToLogin } = useAuth();
+  const { logoutAndNavigateToLogin } = useSessionStore();
   const {
     data: profile,
     isLoading,
@@ -40,7 +40,10 @@ const ProfileScreen = () => {
         <Pressable
           testID='button-back'
           onPress={logoutAndNavigateToLogin}
-          style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.5 }]}
+          style={({ pressed }) => [
+            styles.backButton,
+            pressed && { opacity: 0.5 },
+          ]}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
           <Ionicons

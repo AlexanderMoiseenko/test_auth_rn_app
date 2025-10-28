@@ -1,13 +1,11 @@
-import authService from '@/services/authService';
-
 import apiClient from './client';
 
-export const setupInterceptors = () => {
+export const setupInterceptors = (logout: () => void) => {
   apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
       if (error.response?.status === 401) {
-        authService.logout();
+        logout();
       }
       return Promise.reject(error);
     }

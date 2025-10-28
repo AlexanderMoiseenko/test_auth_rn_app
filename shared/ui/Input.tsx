@@ -114,7 +114,6 @@ const getStyles = (theme: ThemeType) =>
       paddingTop: theme.spacing.xxs,
     },
     inputContainer: {
-      alignItems: 'center',
       backgroundColor: theme.colors.white,
       borderColor: theme.colors.grayLight,
       borderRadius: theme.borderRadius.s,

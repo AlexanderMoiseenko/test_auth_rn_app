@@ -2,11 +2,11 @@ import React, { memo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from '@/context/AuthContext';
+import { useSessionStore } from '@/entities/session/model/session.store';
 import Button, { BUTTON_VARIATIONS } from '@/shared/ui/Button';
 
 const LogoutButton = memo(function LogoutButton() {
-  const { logout } = useAuth();
+  const { logout } = useSessionStore();
   const { t } = useTranslation();
 
   return (
